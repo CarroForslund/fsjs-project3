@@ -42,11 +42,48 @@ function shirtForm(){
   const design = document.getElementById("design");
   design.onchange = function() {
     const value = this.value;
-    if(value === "js puns"){
-      console.log('js puns');
-    } else {
-      console.log('heart js');
-    };
+    colorForm(value);
+  };
+};
+
+function colorForm(value){
+  const selectColor = document.getElementById('color');
+  while (selectColor.firstChild) {
+    selectColor.removeChild(selectColor.firstChild);
+  };
+  if(value === "js puns"){
+
+    const option1 = document.createElement('option');
+    option1.value = "cornflowerblue";
+    option1.text = "Cornflower Blue";
+    selectColor.appendChild(option1);
+
+    const option2 = document.createElement('option');
+    option2.value = "darkslategrey";
+    option2.text = "Dark Slate Grey";
+    selectColor.appendChild(option2);
+
+    const option3 = document.createElement('option');
+    option3.value = "gold";
+    option3.text = "Gold";
+    selectColor.appendChild(option3);
+
+  } else {
+    const option1 = document.createElement('option');
+    option1.value = "tomato";
+    option1.text = "Tomato";
+    selectColor.appendChild(option1);
+
+    const option2 = document.createElement('option');
+    option2.value = "steelblue";
+    option2.text = "Steel Blue";
+    selectColor.appendChild(option2);
+
+    const option3 = document.createElement('option');
+    option3.value = "dimgrey";
+    option3.text = "Dim Grey";
+    selectColor.appendChild(option3);
+
   };
 };
 

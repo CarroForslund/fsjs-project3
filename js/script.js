@@ -1,7 +1,7 @@
-let otherJobroleShown = false;
+let otherJobRoleShown = false;
 
 //highlight Name input field
-const highLight = function(){
+function highLight(){
   var input = document.getElementById('name');
   input.focus();
   input.select();
@@ -9,15 +9,15 @@ const highLight = function(){
 
 //A text field that will be revealed when the "Other" option is selected from the "Job Role" drop down menu.
 //Give the field an id of “other-title,” and add the placeholder text of "Your Job Role" to the field.
-function jobRoleField(){
-  const jobRoleField = document.getElementById("title");
-  jobRoleField.onchange = function() {
+function jobRole(){
+  const jobRole = document.getElementById("title");
+  jobRole.onchange = function() {
     var value = this.value;
     if (value !== 'other'){
-      if (otherJobroleShown){
+      if (otherJobRoleShown){
         const input = document.querySelector('fieldset');
         input.removeChild(input.lastChild);
-        otherJobroleShown = false;
+        otherJobRoleShown = false;
       };
       return;
     } else {
@@ -25,19 +25,19 @@ function jobRoleField(){
       const basicInfo = document.querySelector('fieldset');
       const input = document.createElement('input');
       input.type = 'text';
-      input.id = "role";
+      input.id = "other-title";
       input.name = "user_role";
       input.placeholder = "Your Job Role";
       basicInfo.appendChild(input);
 
-      otherJobroleShown = true;
+      otherJobRoleShown = true;
     };
   }
 };
 
 const runProgram = function(){
   highLight();
-  jobRoleField();
+  jobRole();
 };
 
 runProgram();

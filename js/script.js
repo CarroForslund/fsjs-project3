@@ -69,6 +69,7 @@ function colorForm(value){
     selectColor.appendChild(option3);
 
   } else {
+
     const option1 = document.createElement('option');
     option1.value = "tomato";
     option1.text = "Tomato";
@@ -85,6 +86,13 @@ function colorForm(value){
     selectColor.appendChild(option3);
 
   };
+};
+
+function activities(){
+  //Some events are at the same time as others. Don't allow selection of a workshop at the same date and time
+    //disable the checkbox and visually indicate that the workshop in the competing time slot isn't available.
+  // When a user unchecks an activity, make sure that competing activities (if there are any) are no longer disabled.
+  // As a user selects activities, a running total should display below the list of checkboxes. 
 };
 
 function runProgram(){

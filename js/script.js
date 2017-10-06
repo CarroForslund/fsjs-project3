@@ -294,10 +294,10 @@ function paymentSection(){
 
 function formValidates(){
   const nameField = document.querySelector("fieldset").querySelector('input[id="name"]');
-  // if (nameField == "") {
-  //       alert("Name must be filled out");
-  //       return false;
-  // };
+  if (nameField.value === "" || nameField.value.length < 2) {
+        console.log("Name must be filled out");
+        return false;
+  };
   return true;
 };
 
@@ -308,7 +308,6 @@ function submitButton(){
 
   form.addEventListener("submit", (e) => {
     if (formValidates()){
-      e.preventDefault();
       console.log('submitted');
     } else {
       e.preventDefault();

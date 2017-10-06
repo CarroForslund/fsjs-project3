@@ -98,6 +98,7 @@ function activities(){
   // As a user selects activities, a running total should display below the list of checkboxes.
   const activityFieldset = document.querySelector('fieldset[class="activities"]');
   const activitiesInput = activityFieldset.querySelectorAll('input[type="checkbox"]');
+  let totalPrice = 0;
 
   //const activities = [];
   //let selectedActivities = [];
@@ -105,8 +106,6 @@ function activities(){
   //When checkbox state change
   //get time and price
   for (let i = 0; i < activitiesInput.length; i++){
-
-    //const activityDetails = getActivityDetails(activitiesInput[i]);
 
     activitiesInput[i].onchange = function() {
 
@@ -126,6 +125,8 @@ function activities(){
             };
           };
         };
+        totalPrice += parseInt(selectedActivityDetails.price);
+        console.log('total price is ' + totalPrice);
 
       } else {
         const deselectedActivityDetails = getActivityDetails(activitiesInput[i]);
@@ -144,27 +145,10 @@ function activities(){
             };
           };
         };
+        totalPrice -= parseInt(deselectedActivityDetails.price);
+        console.log('total price is ' + totalPrice);
       };
-
-      //console.log(this.parentNode.textContent.slice(0, this.parentNode.textContent.indexOf(",")));
     };
-
-    // function disableCheckbox(activityIndex, time){
-    //   console.log(activityIndex);
-    //   for (let j = 0; j < activitiesInput.length; j++){
-    //     const string = activitiesInput[i].parentNode.textContent;
-    //
-    //     if (activityIndex !== activitiesInput[i]){
-    //       if(string.includes(time) ){
-    //         console.log("same time");
-    //       };
-    //     };
-    //     // console.log(time);
-    //     // console.log('string' + string);
-    //     //
-    //   };
-
-  //console.log(activitiesInput[i]);
   };
 
   function getActivityDetails(activity){

@@ -98,7 +98,11 @@ function activities(){
   // As a user selects activities, a running total should display below the list of checkboxes.
   const activityFieldset = document.querySelector('fieldset[class="activities"]');
   const activitiesInput = activityFieldset.querySelectorAll('input[type="checkbox"]');
+
   let totalPrice = 0;
+  let priceParagraph = document.createElement("p");
+  priceParagraph.textContent = "Total Price: $" + totalPrice;
+  activityFieldset.appendChild(priceParagraph);
 
   //const activities = [];
   //let selectedActivities = [];
@@ -120,24 +124,21 @@ function activities(){
             const comparedActivity = activitiesInput[i];
             const comparedActivitysDetails = getActivityDetails(comparedActivity);
             if (comparedActivitysDetails.time === selectedActivityDetails.time){
-              console.log(comparedActivitysDetails.name + ' is at the same time');
               comparedActivity.setAttribute("disabled", "");
             };
           };
         };
         totalPrice += parseInt(selectedActivityDetails.price);
-        console.log('total price is ' + totalPrice);
+        priceParagraph.textContent = "Total Price: $" + totalPrice;
 
       } else {
         const deselectedActivityDetails = getActivityDetails(activitiesInput[i]);
-        console.log(deselectedActivityDetails.name + 'is unchecked');
 
         //compare unchecked checkboxes
         //disable checkboxes with same time as checked
         for (let i = 0; i < activitiesInput.length; i++){
 
           if (activitiesInput[i].hasAttribute("disabled")){
-            console.log(activitiesInput[i]);
             const comparedActivity = activitiesInput[i];
             const comparedActivitysDetails = getActivityDetails(comparedActivity);
             if (comparedActivitysDetails.time === deselectedActivityDetails.time){
@@ -146,8 +147,14 @@ function activities(){
           };
         };
         totalPrice -= parseInt(deselectedActivityDetails.price);
-        console.log('total price is ' + totalPrice);
+        priceParagraph.textContent = "Total Price: $" + totalPrice;
       };
+
+      // if (totalPrice > 0){
+      //   const p = document.createElement('p');
+      //   p.textContent = "$" + totalPrice;
+      //   activityFieldset.appendChild(p);
+      // };
     };
   };
 

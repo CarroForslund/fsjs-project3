@@ -258,6 +258,9 @@ function paymentSection(){
   const paypalDiv = document.getElementById("paypal");
   const bitcoinDiv = document.getElementById("bitcoin");
 
+  //const creditCardOption = document.querySelector("option[value='credit-card']");
+  const paypalOption = document.querySelector("option[value='paypal']");
+  const bitcoinOption = document.querySelector("option[value='bitcoin']");
   const paymentSelect = document.getElementById("payment");
   creditCardOption = paymentSelect.querySelector('option[value="credit card"]');
   creditCardOption.setAttribute("selected", "selected");
@@ -267,25 +270,32 @@ function paymentSection(){
   paymentSelect.onchange = function() {
     const value = this.value;
 
-    if (value === "credit card"){
-      creditCardDiv.setAttribute("style", "display: block");
-      paypalDiv.setAttribute("style", "display: none");
-      bitcoinDiv.setAttribute("style", "display: none");
-
-    } else if (value === "paypal"){
+    if (value === "paypal"){
       creditCardDiv.setAttribute("style", "display: none");
       paypalDiv.setAttribute("style", "display: block");
       bitcoinDiv.setAttribute("style", "display: none");
+
+      creditCardOption.removeAttribute("selected");
+      bitcoinOption.removeAttribute("selected");
+      paypalOption.setAttribute("selected", "selected");
 
     } else if (value === "bitcoin"){
       creditCardDiv.setAttribute("style", "display: none");
       paypalDiv.setAttribute("style", "display: none");
       bitcoinDiv.setAttribute("style", "display: block");
 
+      creditCardOption.removeAttribute("selected");
+      paypalOption.removeAttribute("selected");
+      bitcoinOption.setAttribute("selected", "selected");
+
     } else {
       creditCardDiv.setAttribute("style", "display: block");
       paypalDiv.setAttribute("style", "display: none");
       bitcoinDiv.setAttribute("style", "display: none");
+
+      bitcoinOption.removeAttribute("selected");
+      paypalOption.removeAttribute("selected");
+      creditCardOption.setAttribute("selected", "selected");
     };
 
   };
@@ -293,11 +303,29 @@ function paymentSection(){
 };
 
 function formValidates(){
+  let validates = true;
+
   const name = document.querySelector("fieldset").querySelector('input[id="name"]').value;
   const email = document.querySelector("fieldset").querySelector('input[id="mail"]').value;
   const validEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-  let validates = true;
+  let checkedActivity = checkActivities();
+
+  function checkActivities(){
+    const activityFieldset = document.querySelector('fieldset[class="activities"]');
+    const activitiesInput = activityFieldset.querySelectorAll('input[type="checkbox"]');
+
+    for (let i = 0; i < activitiesInput.length; i++){
+      if(activitiesInput[i].checked){
+        return true;
+      }
+    };
+    return false;
+  };
+
+
+  const paymentSelect = document.getElementById("payment");
+  creditCardOption = paymentSelect.querySelector('option[value="credit card"]');
 
   if (name === "") {
     console.log("Name must be filled out");
@@ -305,6 +333,14 @@ function formValidates(){
   };
   if (!validEmail.test(email)){
     console.log("Please provide a valid email address");
+    validates = false;
+  };
+  if (!checkedActivity){
+    console.log("You have to register for at least one activity");
+    validates = false;
+  };
+  if (creditCardOption.hasAttribute("selected")){
+    console.log("Credit card numbers have to validate");
     validates = false;
   };
   return validates;

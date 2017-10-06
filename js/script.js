@@ -11,18 +11,18 @@ function highLight(){
 //Give the field an id of “other-title,” and add the placeholder text of "Your Job Role" to the field.
 function titleForm(){
   const title = document.getElementById("title");
+  const fieldset = document.querySelector('fieldset');
+
   title.onchange = function() {
     const value = this.value;
     if (value !== 'other'){
       if (otherTitleShown){
-        const fieldset = document.querySelector('fieldset');
         fieldset.removeChild(fieldset.lastChild);
         otherTitleShown = false;
       };
       return;
     } else {
       const form = document.querySelector('form');
-      const fieldset = document.querySelector('fieldset');
       const input = document.createElement('input');
       input.type = 'text';
       input.id = "other-title";
@@ -88,17 +88,46 @@ function colorForm(value){
   };
 };
 
+/* ACTIVITY CHECKBOX CHANGE
+**
+*/
 function activities(){
   //Some events are at the same time as others. Don't allow selection of a workshop at the same date and time
     //disable the checkbox and visually indicate that the workshop in the competing time slot isn't available.
   // When a user unchecks an activity, make sure that competing activities (if there are any) are no longer disabled.
-  // As a user selects activities, a running total should display below the list of checkboxes. 
+  // As a user selects activities, a running total should display below the list of checkboxes.
+  const activityFieldset = document.querySelector('fieldset[class="activities"]');
+  const activitiesInput = activityFieldset.querySelectorAll('input[type="checkbox"]');
+
+  //When checkbox state change
+  //get time and price
+  for (let i = 0; i < activitiesInput.length; i++){
+    activitiesInput[i].onchange = function() {
+
+      //Get information about selected activities
+      const string = this.parentNode.textContent; //all the text content
+      const activity = string.slice(1, string.indexOf("—") -1); //Only the activity
+      const price = string.substring(string.indexOf("$") + 1); //Only the price (excl $ sign)
+      let time = "No time set";
+      if (activity !== "Main Conference"){
+        time = string.substring(string.indexOf("—") + 2);
+        time = time.slice(0, time.indexOf(","));
+      };
+      console.log(activity);
+      console.log(price);
+      console.log(time);
+
+      //console.log(this.parentNode.textContent.slice(0, this.parentNode.textContent.indexOf(",")));
+    };
+  //console.log(activitiesInput[i]);
+  };
 };
 
 function runProgram(){
   highLight();
   titleForm();
   shirtForm();
+  activities();
 };
 
 runProgram();

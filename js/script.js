@@ -252,11 +252,39 @@ function activities(){
   };
 };
 
+function paymentSection(){
+
+  const creditCardDiv = "";
+  const payPalDiv = "";
+  const bitcoinDiv = "";
+
+  const paymentSelect = document.getElementById("payment");
+  creditCardOption = paymentSelect.querySelector('option[value="credit card"]');
+  creditCardOption.setAttribute("selected", "selected");
+
+  paymentSelect.onchange = function() {
+    const value = this.value;
+
+    if (value === "credit card"){
+      console.log('credit card');
+    } else if (value === "paypal"){
+      console.log('paypal');
+    } else if (value === "bitcoin"){
+      console.log('bitcoin');
+    } else {
+      console.log('show credit card');
+    };
+
+  };
+
+};
+
 function runProgram(){
   highLight();
   titleForm();
   shirtForm();
   activities();
+  paymentSection();
 };
 
 runProgram();

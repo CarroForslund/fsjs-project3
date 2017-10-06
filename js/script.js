@@ -106,17 +106,12 @@ function activities(){
   //get time and price
   for (let i = 0; i < activitiesInput.length; i++){
 
-    const activityDetails = getActivityDetails(activitiesInput[i]);
+    //const activityDetails = getActivityDetails(activitiesInput[i]);
 
     activitiesInput[i].onchange = function() {
 
       if (activitiesInput[i].checked){
         const selectedActivityDetails = getActivityDetails(activitiesInput[i]);
-
-        console.log(activityDetails.name);
-        console.log(activityDetails.price);
-        console.log(activityDetails.time);
-        console.log(activitiesInput[i].checked);
 
         //compare unchecked checkboxes
         //disable checkboxes with same time as checked
@@ -127,20 +122,28 @@ function activities(){
             const comparedActivitysDetails = getActivityDetails(comparedActivity);
             if (comparedActivitysDetails.time === selectedActivityDetails.time){
               console.log(comparedActivitysDetails.name + ' is at the same time');
-              comparedActivity.setAttribute("disabled", true);
+              comparedActivity.setAttribute("disabled", "");
             };
-            // console.log(activitiesInput[i]);
-            // console.log('not checked');
-            // const string = activitiesInput[i].parentNode.textContent;
-            // console.log(string);
-            // if (string = ){
-            //
-            // };
           };
         };
 
       } else {
-        console.log(activitiesInput[i].checked);
+        const deselectedActivityDetails = getActivityDetails(activitiesInput[i]);
+        console.log(deselectedActivityDetails.name + 'is unchecked');
+
+        //compare unchecked checkboxes
+        //disable checkboxes with same time as checked
+        for (let i = 0; i < activitiesInput.length; i++){
+
+          if (activitiesInput[i].hasAttribute("disabled")){
+            console.log(activitiesInput[i]);
+            const comparedActivity = activitiesInput[i];
+            const comparedActivitysDetails = getActivityDetails(comparedActivity);
+            if (comparedActivitysDetails.time === deselectedActivityDetails.time){
+              comparedActivity.removeAttribute("disabled");
+            };
+          };
+        };
       };
 
       //console.log(this.parentNode.textContent.slice(0, this.parentNode.textContent.indexOf(",")));

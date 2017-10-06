@@ -40,13 +40,14 @@ function titleForm(){
 //match the design selected in the "Design" menu.
 function shirtForm(){
   const design = document.getElementById("design");
+  color("");
   design.onchange = function() {
     const value = this.value;
-    colorForm(value);
+    color(value);
   };
 };
 
-function colorForm(value){
+function color(value){
   const selectColor = document.getElementById('color');
   while (selectColor.firstChild) {
     selectColor.removeChild(selectColor.firstChild);
@@ -68,7 +69,7 @@ function colorForm(value){
     option3.text = "Gold";
     selectColor.appendChild(option3);
 
-  } else {
+  } else if ((value === "heart js")) {
 
     const option1 = document.createElement('option');
     option1.value = "tomato";
@@ -85,6 +86,10 @@ function colorForm(value){
     option3.text = "Dim Grey";
     selectColor.appendChild(option3);
 
+  } else {
+    const option1 = document.createElement('option');
+    option1.text = "Please select a T-shirt theme";
+    selectColor.appendChild(option1);
   };
 };
 

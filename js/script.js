@@ -293,21 +293,30 @@ function paymentSection(){
 };
 
 function formValidates(){
-  const nameField = document.querySelector("fieldset").querySelector('input[id="name"]');
-  if (nameField.value === "" || nameField.value.length < 2) {
-        console.log("Name must be filled out");
-        return false;
+  const name = document.querySelector("fieldset").querySelector('input[id="name"]').value;
+  const email = document.querySelector("fieldset").querySelector('input[id="mail"]').value;
+  const validEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+  let validates = true;
+
+  if (name === "") {
+    console.log("Name must be filled out");
+    validates = false;
   };
-  return true;
+  if (!validEmail.test(email)){
+    console.log("Please provide a valid email address");
+    validates = false;
+  };
+  return validates;
 };
 
 function submitButton(){
   const form = document.querySelector("form");
   const submitButton = form.querySelector("[type=Submit]");
-  console.log(submitButton);
 
   form.addEventListener("submit", (e) => {
     if (formValidates()){
+      e.preventDefault(); //Remove when ready
       console.log('submitted');
     } else {
       e.preventDefault();

@@ -292,12 +292,48 @@ function paymentSection(){
 
 };
 
+function formValidates(){
+  const nameField = document.querySelector("fieldset").querySelector('input[id="name"]');
+  // if (nameField == "") {
+  //       alert("Name must be filled out");
+  //       return false;
+  // };
+  return true;
+};
+
+function submitButton(){
+  const form = document.querySelector("form");
+  const submitButton = form.querySelector("[type=Submit]");
+  console.log(submitButton);
+
+  form.addEventListener("submit", (e) => {
+    if (formValidates()){
+      e.preventDefault();
+      console.log('submitted');
+    } else {
+      e.preventDefault();
+      console.log('check again');
+    };
+
+  });
+
+  // if(formValidates()){
+  //
+  //
+  // } else {
+  //   submitButton.disabled = true;
+  //   console.log('check again');
+  // };
+};
+
+
 function runProgram(){
   highLight();
   titleForm();
   shirtForm();
   activities();
   paymentSection();
+  submitButton();
 };
 
 runProgram();

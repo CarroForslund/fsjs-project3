@@ -40,58 +40,124 @@ function titleForm(){
 //match the design selected in the "Design" menu.
 function shirtForm(){
   const design = document.getElementById("design");
-  color("");
+  removeColorOptions();
+
   design.onchange = function() {
     const value = this.value;
-    color(value);
+    //color(value);
+    removeColorOptions();
+    addColorOptions(value);
   };
 };
 
-function color(value){
-  const selectColor = document.getElementById('color');
-  while (selectColor.firstChild) {
-    selectColor.removeChild(selectColor.firstChild);
+function removeColorOptions(){
+  const colors = document.getElementById("colors-js-puns");
+  if(typeof colors !== 'undefined' && colors !== null){
+    colors.parentNode.removeChild(colors);
   };
+};
+
+function addColorOptions(value){
+  const shirtFieldset = document.querySelector('fieldset[class="shirt"]');
+  const div = document.createElement("div");
+  div.id ="colors-js-puns";
+  div.class = "";
+  shirtFieldset.appendChild(div);
+
+  const label = document.createElement("label");
+  label.for = "color";
+  label.textContent = "Color:";
+  div.appendChild(label);
+
+  const select = document.createElement("select");
+  select.id = "color";
+  div.appendChild(select);
+
   if(value === "js puns"){
 
     const option1 = document.createElement('option');
     option1.value = "cornflowerblue";
     option1.text = "Cornflower Blue";
-    selectColor.appendChild(option1);
+    select.appendChild(option1);
 
     const option2 = document.createElement('option');
     option2.value = "darkslategrey";
     option2.text = "Dark Slate Grey";
-    selectColor.appendChild(option2);
+    select.appendChild(option2);
 
     const option3 = document.createElement('option');
     option3.value = "gold";
     option3.text = "Gold";
-    selectColor.appendChild(option3);
+    select.appendChild(option3);
 
-  } else if ((value === "heart js")) {
+  } else if(value === "heart js"){
 
     const option1 = document.createElement('option');
     option1.value = "tomato";
     option1.text = "Tomato";
-    selectColor.appendChild(option1);
+    select.appendChild(option1);
 
     const option2 = document.createElement('option');
     option2.value = "steelblue";
     option2.text = "Steel Blue";
-    selectColor.appendChild(option2);
+    select.appendChild(option2);
 
     const option3 = document.createElement('option');
     option3.value = "dimgrey";
     option3.text = "Dim Grey";
-    selectColor.appendChild(option3);
+    select.appendChild(option3);
 
   } else {
-    const option1 = document.createElement('option');
-    option1.text = "Please select a T-shirt theme";
-    selectColor.appendChild(option1);
+    removeColorOptions();
   };
 };
+
+// COLOR SELECT LIST (MEETS EXPECTATIONS)
+// function color(value){
+//   const selectColor = document.getElementById('color');
+//   while (selectColor.firstChild) {
+//     selectColor.removeChild(selectColor.firstChild);
+//   };
+//   if(value === "js puns"){
+//
+//     const option1 = document.createElement('option');
+//     option1.value = "cornflowerblue";
+//     option1.text = "Cornflower Blue";
+//     selectColor.appendChild(option1);
+//
+//     const option2 = document.createElement('option');
+//     option2.value = "darkslategrey";
+//     option2.text = "Dark Slate Grey";
+//     selectColor.appendChild(option2);
+//
+//     const option3 = document.createElement('option');
+//     option3.value = "gold";
+//     option3.text = "Gold";
+//     selectColor.appendChild(option3);
+//
+//   } else if ((value === "heart js")) {
+//
+//     const option1 = document.createElement('option');
+//     option1.value = "tomato";
+//     option1.text = "Tomato";
+//     selectColor.appendChild(option1);
+//
+//     const option2 = document.createElement('option');
+//     option2.value = "steelblue";
+//     option2.text = "Steel Blue";
+//     selectColor.appendChild(option2);
+//
+//     const option3 = document.createElement('option');
+//     option3.value = "dimgrey";
+//     option3.text = "Dim Grey";
+//     selectColor.appendChild(option3);
+//
+//   } else {
+//     const option1 = document.createElement('option');
+//     option1.text = "Please select a T-shirt theme";
+//     selectColor.appendChild(option1);
+//   };
+// };
 
 /* ACTIVITY CHECKBOX CHANGE
 **

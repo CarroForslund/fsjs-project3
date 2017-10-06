@@ -99,27 +99,91 @@ function activities(){
   const activityFieldset = document.querySelector('fieldset[class="activities"]');
   const activitiesInput = activityFieldset.querySelectorAll('input[type="checkbox"]');
 
+  //const activities = [];
+  //let selectedActivities = [];
+
   //When checkbox state change
   //get time and price
   for (let i = 0; i < activitiesInput.length; i++){
+
+    const activityDetails = getActivityDetails(activitiesInput[i]);
+
     activitiesInput[i].onchange = function() {
 
-      //Get information about selected activities
-      const string = this.parentNode.textContent; //all the text content
-      const activity = string.slice(1, string.indexOf("—") -1); //Only the activity
-      const price = string.substring(string.indexOf("$") + 1); //Only the price (excl $ sign)
-      let time = "No time set";
-      if (activity !== "Main Conference"){
-        time = string.substring(string.indexOf("—") + 2);
-        time = time.slice(0, time.indexOf(","));
+      if (activitiesInput[i].checked){
+        const selectedActivityDetails = getActivityDetails(activitiesInput[i]);
+
+        console.log(activityDetails.name);
+        console.log(activityDetails.price);
+        console.log(activityDetails.time);
+        console.log(activitiesInput[i].checked);
+
+        //compare unchecked checkboxes
+        //disable checkboxes with same time as checked
+        for (let i = 0; i < activitiesInput.length; i++){
+
+          if (!activitiesInput[i].checked){
+            const comparedActivity = activitiesInput[i];
+            const comparedActivitysDetails = getActivityDetails(comparedActivity);
+            if (comparedActivitysDetails.time === selectedActivityDetails.time){
+              console.log(comparedActivitysDetails.name + ' is at the same time');
+              comparedActivity.setAttribute("disabled", true);
+            };
+            // console.log(activitiesInput[i]);
+            // console.log('not checked');
+            // const string = activitiesInput[i].parentNode.textContent;
+            // console.log(string);
+            // if (string = ){
+            //
+            // };
+          };
+        };
+
+      } else {
+        console.log(activitiesInput[i].checked);
       };
-      console.log(activity);
-      console.log(price);
-      console.log(time);
 
       //console.log(this.parentNode.textContent.slice(0, this.parentNode.textContent.indexOf(",")));
     };
+
+    // function disableCheckbox(activityIndex, time){
+    //   console.log(activityIndex);
+    //   for (let j = 0; j < activitiesInput.length; j++){
+    //     const string = activitiesInput[i].parentNode.textContent;
+    //
+    //     if (activityIndex !== activitiesInput[i]){
+    //       if(string.includes(time) ){
+    //         console.log("same time");
+    //       };
+    //     };
+    //     // console.log(time);
+    //     // console.log('string' + string);
+    //     //
+    //   };
+
   //console.log(activitiesInput[i]);
+  };
+
+  function getActivityDetails(activity){
+    const string = activity.parentNode.textContent; //all the text content
+    const name = string.slice(1, string.indexOf("—") -1); //Only the activity name
+    const price = string.substring(string.indexOf("$") + 1); //Only the price (excl $ sign)
+    let time = "No time set";
+    if (name !== "Main Conference"){
+      time = string.substring(string.indexOf("—") + 2);
+      time = time.slice(0, time.indexOf(","));
+    };
+    let activityDetails = {
+      name: "",
+      time: "",
+      price: ""
+    };
+
+    activityDetails.name = name;
+    activityDetails.time = time;
+    activityDetails.price = price;
+
+    return activityDetails;
   };
 };
 

@@ -254,25 +254,38 @@ function activities(){
 
 function paymentSection(){
 
-  const creditCardDiv = "";
-  const payPalDiv = "";
-  const bitcoinDiv = "";
+  const creditCardDiv = document.getElementById("credit-card");
+  const paypalDiv = document.getElementById("paypal");
+  const bitcoinDiv = document.getElementById("bitcoin");
 
   const paymentSelect = document.getElementById("payment");
   creditCardOption = paymentSelect.querySelector('option[value="credit card"]');
   creditCardOption.setAttribute("selected", "selected");
+  paypalDiv.setAttribute("style", "display: none");
+  bitcoinDiv.setAttribute("style", "display: none");
 
   paymentSelect.onchange = function() {
     const value = this.value;
 
     if (value === "credit card"){
-      console.log('credit card');
+      creditCardDiv.setAttribute("style", "display: block");
+      paypalDiv.setAttribute("style", "display: none");
+      bitcoinDiv.setAttribute("style", "display: none");
+
     } else if (value === "paypal"){
-      console.log('paypal');
+      creditCardDiv.setAttribute("style", "display: none");
+      paypalDiv.setAttribute("style", "display: block");
+      bitcoinDiv.setAttribute("style", "display: none");
+
     } else if (value === "bitcoin"){
-      console.log('bitcoin');
+      creditCardDiv.setAttribute("style", "display: none");
+      paypalDiv.setAttribute("style", "display: none");
+      bitcoinDiv.setAttribute("style", "display: block");
+
     } else {
-      console.log('show credit card');
+      creditCardDiv.setAttribute("style", "display: block");
+      paypalDiv.setAttribute("style", "display: none");
+      bitcoinDiv.setAttribute("style", "display: none");
     };
 
   };

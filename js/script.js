@@ -262,6 +262,7 @@ function paymentSection(){
   const paypalOption = document.querySelector("option[value='paypal']");
   const bitcoinOption = document.querySelector("option[value='bitcoin']");
   const paymentSelect = document.getElementById("payment");
+
   creditCardOption = paymentSelect.querySelector('option[value="credit card"]');
   creditCardOption.setAttribute("selected", "selected");
   paypalDiv.setAttribute("style", "display: none");
@@ -300,6 +301,8 @@ function paymentSection(){
 
   };
 
+
+
 };
 
 function formValidates(){
@@ -308,6 +311,9 @@ function formValidates(){
   const name = document.querySelector("fieldset").querySelector('input[id="name"]').value;
   const email = document.querySelector("fieldset").querySelector('input[id="mail"]').value;
   const validEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  const cardNumber = document.querySelector("input[id='cc-num']").value;
+  const cardZipCode = document.querySelector("input[id='zip']").value;
+  const cardCVV = document.querySelector("input[id='cvv']").value;
 
   let checkedActivity = checkActivities();
 
@@ -322,7 +328,6 @@ function formValidates(){
     };
     return false;
   };
-
 
   const paymentSelect = document.getElementById("payment");
   creditCardOption = paymentSelect.querySelector('option[value="credit card"]');
@@ -340,8 +345,30 @@ function formValidates(){
     validates = false;
   };
   if (creditCardOption.hasAttribute("selected")){
-    console.log("Credit card numbers have to validate");
-    validates = false;
+    if (isNaN(cardNumber)){
+      console.log("Credit card number have to be a number");
+      validates = false;
+    };
+    if (cardNumber.length < 13 || cardNumber.length > 16  || cardNumber === ""){
+      console.log("Credit card number have to contain 13-16 numbers");
+      validates = false;
+    };
+    if (isNaN(cardZipCode)){
+      console.log("Zip code have to be a number");
+      validates = false;
+    };
+    if (cardZipCode.length !== 5|| cardZipCode === ""){
+      console.log("Zip code have to contain 5 numbers");
+      validates = false;
+    };
+    if (isNaN(cardCVV)){
+      console.log("CVV have to be a number");
+      validates = false;
+    };
+    if (cardCVV.length !== 3 || cardCVV === ""){
+      console.log("CVV have to contain 3 numbers");
+      validates = false;
+    };
   };
   return validates;
 };

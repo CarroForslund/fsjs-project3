@@ -1,14 +1,18 @@
-let otherTitleShown = true;
 
-//highlight Name input field
+
+/* HIGHLIGHT NAME INPUT FIELD ON PAGE LOAD
+**
+*/
 function highLight(){
   var input = document.getElementById('name');
   input.focus();
   input.select();
 };
 
-//A text field that will be revealed when the "Other" option is selected from the "Job Role" drop down menu.
-//Give the field an id of “other-title,” and add the placeholder text of "Your Job Role" to the field.
+/* DISPLAY INPUT FIELD
+** A text field that will be revealed when the "Other" option is
+** selected from the "Job Role" drop down menu.
+*/
 function titleForm(){
   const title = document.getElementById("title");
   const fieldset = document.querySelector("fieldset");
@@ -19,159 +23,96 @@ function titleForm(){
     const value = this.value;
     if (value !== 'other'){
       otherRole.setAttribute("style", "display: none");
-      // if (otherTitleShown){
-      //   fieldset.removeChild(fieldset.lastChild);
-      //   otherTitleShown = false;
-      // };
       return;
     } else {
       otherRole.setAttribute("style", "display: block");
       otherRole.placeholder = "Your Job Role";
-      // const form = document.querySelector('form');
-      // const input = document.createElement('input');
-      // input.type = 'text';
-      // input.id = "other-title";
-      // input.name = "user_role";
-      // input.placeholder = "Your Job Role";
-      // fieldset.appendChild(input);
-
-      // otherTitleShown = true;
     };
   }
 };
 
-// ”T-Shirt Info” section of the form:
-// For the T-Shirt color menu, only display the color options that
-//match the design selected in the "Design" menu.
+/* T-SHIRT FORM SECTION
+** Display the color options that match
+** the design selected in the "Design" menu.
+*/
 function shirtForm(){
   const design = document.getElementById("design");
   removeColorOptions();
 
   design.onchange = function() {
     const value = this.value;
-    //color(value);
     removeColorOptions();
     addColorOptions(value);
   };
-};
 
-function removeColorOptions(){
-  const colors = document.getElementById("colors-js-puns");
-  if(typeof colors !== 'undefined' && colors !== null){
-    colors.parentNode.removeChild(colors);
+  function removeColorOptions(){
+    const colors = document.getElementById("colors-js-puns");
+    if(typeof colors !== 'undefined' && colors !== null){
+      colors.parentNode.removeChild(colors);
+    };
+  };
+
+  function addColorOptions(value){
+    const shirtFieldset = document.querySelector('fieldset[class="shirt"]');
+    const div = document.createElement("div");
+    div.id ="colors-js-puns";
+    div.class = "";
+    shirtFieldset.appendChild(div);
+
+    const label = document.createElement("label");
+    label.for = "color";
+    label.textContent = "Color:";
+    div.appendChild(label);
+
+    const select = document.createElement("select");
+    select.id = "color";
+    div.appendChild(select);
+
+    if(value === "js puns"){
+
+      const option1 = document.createElement('option');
+      option1.value = "cornflowerblue";
+      option1.text = "Cornflower Blue";
+      select.appendChild(option1);
+
+      const option2 = document.createElement('option');
+      option2.value = "darkslategrey";
+      option2.text = "Dark Slate Grey";
+      select.appendChild(option2);
+
+      const option3 = document.createElement('option');
+      option3.value = "gold";
+      option3.text = "Gold";
+      select.appendChild(option3);
+
+    } else if(value === "heart js"){
+
+      const option1 = document.createElement('option');
+      option1.value = "tomato";
+      option1.text = "Tomato";
+      select.appendChild(option1);
+
+      const option2 = document.createElement('option');
+      option2.value = "steelblue";
+      option2.text = "Steel Blue";
+      select.appendChild(option2);
+
+      const option3 = document.createElement('option');
+      option3.value = "dimgrey";
+      option3.text = "Dim Grey";
+      select.appendChild(option3);
+
+    } else {
+      removeColorOptions();
+    };
   };
 };
-
-function addColorOptions(value){
-  const shirtFieldset = document.querySelector('fieldset[class="shirt"]');
-  const div = document.createElement("div");
-  div.id ="colors-js-puns";
-  div.class = "";
-  shirtFieldset.appendChild(div);
-
-  const label = document.createElement("label");
-  label.for = "color";
-  label.textContent = "Color:";
-  div.appendChild(label);
-
-  const select = document.createElement("select");
-  select.id = "color";
-  div.appendChild(select);
-
-  if(value === "js puns"){
-
-    const option1 = document.createElement('option');
-    option1.value = "cornflowerblue";
-    option1.text = "Cornflower Blue";
-    select.appendChild(option1);
-
-    const option2 = document.createElement('option');
-    option2.value = "darkslategrey";
-    option2.text = "Dark Slate Grey";
-    select.appendChild(option2);
-
-    const option3 = document.createElement('option');
-    option3.value = "gold";
-    option3.text = "Gold";
-    select.appendChild(option3);
-
-  } else if(value === "heart js"){
-
-    const option1 = document.createElement('option');
-    option1.value = "tomato";
-    option1.text = "Tomato";
-    select.appendChild(option1);
-
-    const option2 = document.createElement('option');
-    option2.value = "steelblue";
-    option2.text = "Steel Blue";
-    select.appendChild(option2);
-
-    const option3 = document.createElement('option');
-    option3.value = "dimgrey";
-    option3.text = "Dim Grey";
-    select.appendChild(option3);
-
-  } else {
-    removeColorOptions();
-  };
-};
-
-// COLOR SELECT LIST (MEETS EXPECTATIONS)
-// function color(value){
-//   const selectColor = document.getElementById('color');
-//   while (selectColor.firstChild) {
-//     selectColor.removeChild(selectColor.firstChild);
-//   };
-//   if(value === "js puns"){
-//
-//     const option1 = document.createElement('option');
-//     option1.value = "cornflowerblue";
-//     option1.text = "Cornflower Blue";
-//     selectColor.appendChild(option1);
-//
-//     const option2 = document.createElement('option');
-//     option2.value = "darkslategrey";
-//     option2.text = "Dark Slate Grey";
-//     selectColor.appendChild(option2);
-//
-//     const option3 = document.createElement('option');
-//     option3.value = "gold";
-//     option3.text = "Gold";
-//     selectColor.appendChild(option3);
-//
-//   } else if ((value === "heart js")) {
-//
-//     const option1 = document.createElement('option');
-//     option1.value = "tomato";
-//     option1.text = "Tomato";
-//     selectColor.appendChild(option1);
-//
-//     const option2 = document.createElement('option');
-//     option2.value = "steelblue";
-//     option2.text = "Steel Blue";
-//     selectColor.appendChild(option2);
-//
-//     const option3 = document.createElement('option');
-//     option3.value = "dimgrey";
-//     option3.text = "Dim Grey";
-//     selectColor.appendChild(option3);
-//
-//   } else {
-//     const option1 = document.createElement('option');
-//     option1.text = "Please select a T-shirt theme";
-//     selectColor.appendChild(option1);
-//   };
-// };
 
 /* ACTIVITY CHECKBOX CHANGE
-**
+** Makes sure you can't book colliding activities.
+** Calculates the total price of selected activities.
 */
 function activities(){
-  //Some events are at the same time as others. Don't allow selection of a workshop at the same date and time
-    //disable the checkbox and visually indicate that the workshop in the competing time slot isn't available.
-  // When a user unchecks an activity, make sure that competing activities (if there are any) are no longer disabled.
-  // As a user selects activities, a running total should display below the list of checkboxes.
   const activityFieldset = document.querySelector('fieldset[class="activities"]');
   const activitiesInput = activityFieldset.querySelectorAll('input[type="checkbox"]');
 
@@ -180,11 +121,7 @@ function activities(){
   priceParagraph.textContent = "Total Price: $" + totalPrice;
   activityFieldset.appendChild(priceParagraph);
 
-  //const activities = [];
-  //let selectedActivities = [];
-
-  //When checkbox state change
-  //get time and price
+  //When checkbox state change get time and price
   for (let i = 0; i < activitiesInput.length; i++){
 
     activitiesInput[i].onchange = function() {
@@ -192,8 +129,7 @@ function activities(){
       if (activitiesInput[i].checked){
         const selectedActivityDetails = getActivityDetails(activitiesInput[i]);
 
-        //compare unchecked checkboxes
-        //disable checkboxes with same time as checked
+        //compare unchecked checkboxes disable checkboxes with same time as checked
         for (let i = 0; i < activitiesInput.length; i++){
 
           if (!activitiesInput[i].checked){
@@ -210,8 +146,7 @@ function activities(){
       } else {
         const deselectedActivityDetails = getActivityDetails(activitiesInput[i]);
 
-        //compare unchecked checkboxes
-        //disable checkboxes with same time as checked
+        //compare unchecked checkboxes and disable checkboxes with same time as checked
         for (let i = 0; i < activitiesInput.length; i++){
 
           if (activitiesInput[i].hasAttribute("disabled")){
@@ -225,12 +160,6 @@ function activities(){
         totalPrice -= parseInt(deselectedActivityDetails.price);
         priceParagraph.textContent = "Total Price: $" + totalPrice;
       };
-
-      // if (totalPrice > 0){
-      //   const p = document.createElement('p');
-      //   p.textContent = "$" + totalPrice;
-      //   activityFieldset.appendChild(p);
-      // };
     };
   };
 
@@ -258,61 +187,60 @@ function activities(){
 };
 
 function paymentSection(){
-
+  //Declare variables
   const creditCardDiv = document.getElementById("credit-card");
   const paypalDiv = document.getElementById("paypal");
   const bitcoinDiv = document.getElementById("bitcoin");
-
-  //const creditCardOption = document.querySelector("option[value='credit-card']");
   const paypalOption = document.querySelector("option[value='paypal']");
   const bitcoinOption = document.querySelector("option[value='bitcoin']");
   const paymentSelect = document.getElementById("payment");
-
   creditCardOption = paymentSelect.querySelector('option[value="credit card"]');
+
+  //Set credit card to default payment method
   creditCardOption.setAttribute("selected", "selected");
+
+  //Hide paypal and bitcoin payment information
   paypalDiv.setAttribute("style", "display: none");
   bitcoinDiv.setAttribute("style", "display: none");
 
+
+  //Hide/show fields depending on what payment method is selected
+  //Select the chosen option in the list
   paymentSelect.onchange = function() {
     const value = this.value;
 
     if (value === "paypal"){
-      creditCardDiv.setAttribute("style", "display: none");
-      paypalDiv.setAttribute("style", "display: block");
-      bitcoinDiv.setAttribute("style", "display: none");
+      displayNone(creditCardDiv);
+      displayNone(bitcoinDiv);
+      displayBlock(paypalDiv);
 
-      creditCardOption.removeAttribute("selected");
-      bitcoinOption.removeAttribute("selected");
-      paypalOption.setAttribute("selected", "selected");
+      deselect(creditCardOption);
+      deselect(bitcoinOption);
+      select(paypalOption);
 
     } else if (value === "bitcoin"){
-      creditCardDiv.setAttribute("style", "display: none");
-      paypalDiv.setAttribute("style", "display: none");
-      bitcoinDiv.setAttribute("style", "display: block");
+      displayNone(creditCardDiv);
+      displayBlock(bitcoinDiv);
+      displayNone(paypalDiv);
 
-      creditCardOption.removeAttribute("selected");
-      paypalOption.removeAttribute("selected");
-      bitcoinOption.setAttribute("selected", "selected");
+      deselect(creditCardOption);
+      deselect(paypalOption);
+      select(bitcoinOption);
 
     } else {
-      creditCardDiv.setAttribute("style", "display: block");
-      paypalDiv.setAttribute("style", "display: none");
-      bitcoinDiv.setAttribute("style", "display: none");
+      displayBlock(creditCardDiv);
+      displayNone(bitcoinDiv);
+      displayNone(paypalDiv);
 
-      bitcoinOption.removeAttribute("selected");
-      paypalOption.removeAttribute("selected");
-      creditCardOption.setAttribute("selected", "selected");
+      deselect(bitcoinOption);
+      deselect(paypalOption);
+      select(creditCardOption);
     };
-
   };
-
-
-
 };
 
 function formValidates(){
-  let validates = true;
-
+  //Declare variables
   const name = document.querySelector("fieldset").querySelector('input[id="name"]').value;
   const email = document.querySelector("fieldset").querySelector('input[id="mail"]').value;
   const validEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -320,8 +248,10 @@ function formValidates(){
   const cardZipCode = document.querySelector("input[id='zip']").value;
   const cardCVV = document.querySelector("input[id='cvv']").value;
 
-  let checkedActivity = checkActivities();
+  let validates = true; //Form validates (can be updated if it won't pass the validation checks)
+  let checkedActivity = checkActivities(); //If at least one activity is selected it will be true
 
+  //Check if activity is selected or not
   function checkActivities(){
     const activityFieldset = document.querySelector('fieldset[class="activities"]');
     const activitiesInput = activityFieldset.querySelectorAll('input[type="checkbox"]');
@@ -378,31 +308,54 @@ function formValidates(){
   return validates;
 };
 
+/* DISPLAY NONE
+** CSS style of chosen element
+*/
+function displayNone(element){
+  element.setAttribute("style", "display: none");
+};
+
+/* DISPLAY BLOCK
+** CSS style of chosen element
+*/
+function displayBlock(element){
+  element.setAttribute("style", "display: block");
+};
+
+/* SELECT FORM OPTION
+** set attribute for form options
+*/
+function select(element){
+  element.setAttribute("selected", "selected");
+};
+
+/* DESELECT FORM OPTION
+** remove attribute for form options
+*/
+function deselect(element){
+  element.removeAttribute("selected");
+};
+
+/* SUBMIT ONLY WHEN FORM VALIDATES
+** If not prevent default submit functionality
+*/
 function submitButton(){
   const form = document.querySelector("form");
   const submitButton = form.querySelector("[type=Submit]");
 
   form.addEventListener("submit", (e) => {
-    if (formValidates()){
-      e.preventDefault(); //Remove when ready
-      console.log('submitted');
-    } else {
+    if (!formValidates()){
       e.preventDefault();
-      console.log('check again');
+    } else {                      //Remove when ready
+      e.preventDefault();         //Remove when ready
+      console.log('submitted');   //Remove when ready
     };
-
   });
-
-  // if(formValidates()){
-  //
-  //
-  // } else {
-  //   submitButton.disabled = true;
-  //   console.log('check again');
-  // };
 };
 
-
+/* RUN FUNCTIONS ON PROGRAM START
+**
+*/
 function runProgram(){
   highLight();
   titleForm();

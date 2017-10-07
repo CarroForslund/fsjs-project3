@@ -1,4 +1,4 @@
-let otherTitleShown = false;
+let otherTitleShown = true;
 
 //highlight Name input field
 function highLight(){
@@ -11,26 +11,31 @@ function highLight(){
 //Give the field an id of “other-title,” and add the placeholder text of "Your Job Role" to the field.
 function titleForm(){
   const title = document.getElementById("title");
-  const fieldset = document.querySelector('fieldset');
+  const fieldset = document.querySelector("fieldset");
+  const otherRole = document.querySelector("input[id='other-title']");
+  otherRole.setAttribute("style", "display: none");
 
   title.onchange = function() {
     const value = this.value;
     if (value !== 'other'){
-      if (otherTitleShown){
-        fieldset.removeChild(fieldset.lastChild);
-        otherTitleShown = false;
-      };
+      otherRole.setAttribute("style", "display: none");
+      // if (otherTitleShown){
+      //   fieldset.removeChild(fieldset.lastChild);
+      //   otherTitleShown = false;
+      // };
       return;
     } else {
-      const form = document.querySelector('form');
-      const input = document.createElement('input');
-      input.type = 'text';
-      input.id = "other-title";
-      input.name = "user_role";
-      input.placeholder = "Your Job Role";
-      fieldset.appendChild(input);
+      otherRole.setAttribute("style", "display: block");
+      otherRole.placeholder = "Your Job Role";
+      // const form = document.querySelector('form');
+      // const input = document.createElement('input');
+      // input.type = 'text';
+      // input.id = "other-title";
+      // input.name = "user_role";
+      // input.placeholder = "Your Job Role";
+      // fieldset.appendChild(input);
 
-      otherTitleShown = true;
+      // otherTitleShown = true;
     };
   }
 };

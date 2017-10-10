@@ -1,17 +1,17 @@
 /* VARIABLE DECLARATION
 ** Variables needed for more than one function
 */
-const nameField = document.querySelector("fieldset").querySelector('input[id="name"]');
-const emailField = document.querySelector("fieldset").querySelector('input[id="mail"]');
+const nameField = document.querySelector("fieldset").querySelector("input[id='name']");
+const emailField = document.querySelector("fieldset").querySelector("input[id='mail']");
 const validEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const paymentSelect = document.getElementById("payment");
-const creditCardOption = paymentSelect.querySelector('option[value="credit card"]');
+const creditCardOption = paymentSelect.querySelector("option[value='credit card']");
 const cardNumberField = document.querySelector("input[id='cc-num']");
 const cardZipCodeField = document.querySelector("input[id='zip']");
 const cardCVVField = document.querySelector("input[id='cvv']");
 
-let name = document.querySelector("fieldset").querySelector('input[id="name"]').value;
-let email = document.querySelector("fieldset").querySelector('input[id="mail"]').value;
+let name = document.querySelector("fieldset").querySelector("input[id='name']").value;
+let email = document.querySelector("fieldset").querySelector("input[id='mail']").value;
 let cardNumber = document.querySelector("input[id='cc-num']").value;
 let cardZipCode = document.querySelector("input[id='zip']").value;
 let cardCVV = document.querySelector("input[id='cvv']").value;
@@ -258,30 +258,16 @@ function paymentSection(){
 
 /* FUNCTIONS FOR VALIDATION ------------------------------------------------- */
 
-/* CHECK IF AT LEAST ONE ACTIVITY IS SELECTED
-** Check if activity is selected or not
-*/
-function checkActivities(){
-  const activityFieldset = document.querySelector('fieldset[class="activities"]');
-  const activitiesInput = activityFieldset.querySelectorAll('input[type="checkbox"]');
-
-  for (let i = 0; i < activitiesInput.length; i++){
-    if(activitiesInput[i].checked){
-      return true;
-    }
-  };
-  console.log("You have to choose at least one activity");
-  return false;
-};
-
 /* CHECK IF NAME IS FILLED IN
 ** At least 1 character
 */
-function nameValidation(){
-  name = document.querySelector("fieldset").querySelector('input[id="name"]').value;
+function nameValidation(triggerFunction){
+  name = document.querySelector("fieldset").querySelector("input[id='name']").value;
   if (name === ""){
-    console.log("You have to enter your name");
     invalidStyle(nameField);
+    if (triggerFunction !== "liveValidate"){
+      console.log("You have to enter your name");
+    };
     return false;
   } else {
     validStyle(nameField);
@@ -289,14 +275,18 @@ function nameValidation(){
   };
 };
 
-function emailValidation(){
-  email = document.querySelector("fieldset").querySelector('input[id="mail"]').value;
+function emailValidation(triggerFunction){
+  email = document.querySelector("fieldset").querySelector("input[id='mail']").value;
   if (email === ""){
     invalidStyle(emailField);
-    console.log("You have to enter your email address");
+    if (triggerFunction !== "liveValidate"){
+      console.log("You have to enter your email address");
+    };
     return false;
   } else if (email !== "" && !validEmail.test(email)){
-    console.log("You have to enter a valid email address");
+    if (triggerFunction !== "liveValidate"){
+      console.log("You have to enter a valid email address");
+    };
     invalidStyle(emailField);
     return false;
   } else {
@@ -305,23 +295,49 @@ function emailValidation(){
   };
 };
 
-function cardNumberValidation(){
+/* CHECK IF AT LEAST ONE ACTIVITY IS SELECTED
+** Check if activity is selected or not
+*/
+function checkActivities(triggerFunction){
+  const activityFieldset = document.querySelector('fieldset[class="activities"]');
+  const activitiesInput = activityFieldset.querySelectorAll('input[type="checkbox"]');
+
+  for (let i = 0; i < activitiesInput.length; i++){
+    if(activitiesInput[i].checked){
+      return true;
+    }
+  };
+  if(triggerFunction !== "liveValidate"){
+    console.log("You have to choose at least one activity");
+  };
+  return false;
+};
+
+function cardNumberValidation(triggerFunction){
   cardNumber = document.querySelector("input[id='cc-num']").value;
   if (cardNumber === ""){
     invalidStyle(cardNumberField);
-    console.log("You have to enter a creddit card number");
+    if(triggerFunction !== "liveValidate"){
+      console.log("You have to enter a creddit card number");
+    };
     return false;
   } else if (cardNumber.length < 13){
     invalidStyle(cardNumberField);
-    console.log("Credit card number is too short");
+    if(triggerFunction !== "liveValidate"){
+      console.log("Credit card number is too short");
+    };
     return false;
   } else if (cardNumber.length > 16){
     invalidStyle(cardNumberField);
-    console.log("Credit card number is too long");
+    if(triggerFunction !== "liveValidate"){
+      console.log("Credit card number is too long");
+    };
     return false;
   } else if (isNaN(cardNumber)){
     invalidStyle(cardNumberField);
-    console.log("Credit card number have to be a number");
+    if(triggerFunction !== "liveValidate"){
+      console.log("Credit card number have to be a number");
+    };
     return false;
   } else {
     validStyle(cardNumberField);
@@ -329,11 +345,13 @@ function cardNumberValidation(){
   };
 };
 
-function cardZipCodeValidation(){
+function cardZipCodeValidation(triggerFunction){
   cardZipCode = document.querySelector("input[id='zip']").value;
   if (isNaN(cardZipCode) || cardZipCode.length !== 5 || cardZipCode === ""){
     invalidStyle(cardZipCodeField);
-    console.log("Zip code have to contain 5 digits");
+    if(triggerFunction !== "liveValidate"){
+      console.log("Zip code have to contain 5 digits");
+    };
     return false;
   } else {
     validStyle(cardZipCodeField);
@@ -341,11 +359,13 @@ function cardZipCodeValidation(){
   };
 };
 
-function cardCVVValidation(){
+function cardCVVValidation(triggerFunction){
   cardCVV = document.querySelector("input[id='cvv']").value;
   if (isNaN(cardCVV) || cardCVV.length !== 3 || cardCVV === ""){
     invalidStyle( cardCVVField);
-    console.log("CVV have to contain 3 digits");
+    if(triggerFunction !== "liveValidate"){
+      console.log("CVV have to contain 3 digits");
+    };
     return false;
   } else {
     validStyle(cardCVVField);
@@ -370,40 +390,40 @@ function liveValidation(){
   onblurValidate(cardCVVField, cardCVVValidation);
 };
 
-function submitValidation(){
-  let validates = true; //Tells if form validates
-
-  if (!nameValidation()){
-    validates = false;
-  };
-  if (!emailValidation()){
-    validates = false;
-  };
-  if (!checkActivities()){
-    validates = false;
-  };
-  if(!cardNumberValidation()){
-    validates = false;
-  };
-  if(!cardZipCodeValidation()){
-    validates = false;
-  };
-  if(!cardCVVValidation()){
-    validates = false;
-  };
-  return validates;
-};
-
 function liveValidate(inputField, validationFunction){
   inputField.onkeyup = function(){
-    validationFunction();
+    validationFunction("liveValidate");
   };
 };
 
 function onblurValidate(inputField, validationFunction){
   inputField.onblur = function(){
-    validationFunction();
+    validationFunction("onblurValidate");
   };
+};
+
+function submitValidation(){
+  let validates = true; //Tells if form validates
+
+  if (!nameValidation("submitValidation")){
+    validates = false;
+  };
+  if (!emailValidation("submitValidation")){
+    validates = false;
+  };
+  if (!checkActivities("submitValidation")){
+    validates = false;
+  };
+  if(!cardNumberValidation("submitValidation")){
+    validates = false;
+  };
+  if(!cardZipCodeValidation("submitValidation")){
+    validates = false;
+  };
+  if(!cardCVVValidation("submitValidation")){
+    validates = false;
+  };
+  return validates;
 };
 
 function validStyle(element){

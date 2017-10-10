@@ -1,5 +1,4 @@
 /* VARIABLE DECLARATION
-** Variables needed for more than one function
 */
 const nameField = document.querySelector("fieldset").querySelector("input[id='name']");
 const emailField = document.querySelector("fieldset").querySelector("input[id='mail']");
@@ -10,11 +9,20 @@ const cardNumberField = document.querySelector("input[id='cc-num']");
 const cardZipCodeField = document.querySelector("input[id='zip']");
 const cardCVVField = document.querySelector("input[id='cvv']");
 
+//Variables for input values
 let name = document.querySelector("fieldset").querySelector("input[id='name']").value;
 let email = document.querySelector("fieldset").querySelector("input[id='mail']").value;
 let cardNumber = document.querySelector("input[id='cc-num']").value;
 let cardZipCode = document.querySelector("input[id='zip']").value;
 let cardCVV = document.querySelector("input[id='cvv']").value;
+
+//Variables for Error Messages
+let nameErrorMessageShow = false;
+let emailErrorMessageShow = false;
+let activityErrorMessageShow = false;
+let cardErrorMessageShow = false;
+let zipErrorMessageShow = false;
+let cvvErrorMessageShow = false;
 //let checkedActivity = checkActivities(); //If at least one activity is selected it will be true
 
 /* HIGHLIGHT NAME INPUT FIELD ON PAGE LOAD
@@ -256,8 +264,6 @@ function paymentSection(){
   };
 };
 
-/* FUNCTIONS FOR VALIDATION ------------------------------------------------- */
-
 /* CHECK IF NAME IS FILLED IN
 ** At least 1 character
 */
@@ -266,37 +272,58 @@ function nameValidation(triggerFunction){
   if (name === ""){
     invalidStyle(nameField);
     if (triggerFunction !== "liveValidate"){
-      console.log("You have to enter your name");
+      if(nameErrorMessageShow){
+        hideErrorMessage("name");
+      };
+      showErrorMessage("name", "You have to enter your name", nameField);
+      nameErrorMessageShow = true;
     };
     return false;
   } else {
     validStyle(nameField);
+    if(nameErrorMessageShow){
+      hideErrorMessage("name");
+      nameErrorMessageShow = false;
+    };
     return true;
   };
 };
 
+/* CHECK IF EMAIL ADDRESS IS FILLED IN AND VALID
+*/
 function emailValidation(triggerFunction){
   email = document.querySelector("fieldset").querySelector("input[id='mail']").value;
   if (email === ""){
     invalidStyle(emailField);
     if (triggerFunction !== "liveValidate"){
-      console.log("You have to enter your email address");
+      if(emailErrorMessageShow){
+        hideErrorMessage("email");
+      };
+      showErrorMessage("email", "You have to enter your email address", emailField);
+      emailErrorMessageShow = true;
     };
     return false;
   } else if (email !== "" && !validEmail.test(email)){
     if (triggerFunction !== "liveValidate"){
-      console.log("You have to enter a valid email address");
+      if(emailErrorMessageShow){
+        hideErrorMessage("email");
+      };
+      showErrorMessage("email", "You have to enter a valid email address", emailField);
+      emailErrorMessageShow = true;
     };
     invalidStyle(emailField);
     return false;
   } else {
     validStyle(emailField);
+    if(emailErrorMessageShow){
+      hideErrorMessage("email");
+      emailErrorMessageShow = false;
+    };
     return true;
   };
 };
 
 /* CHECK IF AT LEAST ONE ACTIVITY IS SELECTED
-** Check if activity is selected or not
 */
 function checkActivities(triggerFunction){
   const activityFieldset = document.querySelector('fieldset[class="activities"]');
@@ -304,75 +331,137 @@ function checkActivities(triggerFunction){
 
   for (let i = 0; i < activitiesInput.length; i++){
     if(activitiesInput[i].checked){
+      for (let i = 0; i < activitiesInput.length; i++){
+        activitiesInput[i].removeAttribute("style", "outline");
+      };
+      if(activityErrorMessageShow){
+        hideErrorMessage("activity");
+        activityErrorMessageShow = false;
+      };
       return true;
     }
   };
   if(triggerFunction !== "liveValidate"){
-    console.log("You have to choose at least one activity");
+    invalidStyle(activityFieldset);
+    if(activityErrorMessageShow){
+      hideErrorMessage("activity");
+    };
+    for (let i = 0; i < activitiesInput.length; i++){
+      activitiesInput[i].setAttribute("style", "outline: 1px solid red");
+    };
+    showErrorMessage("activity", "You have to choose at least one activity", activityFieldset);
+    activityErrorMessageShow = true;
   };
   return false;
 };
 
+/* CHECK THAT CARD NUMBER IS FILLED IN AND A VALID NUMBER
+** 13-16 digits
+*/
 function cardNumberValidation(triggerFunction){
   cardNumber = document.querySelector("input[id='cc-num']").value;
   if (cardNumber === ""){
     invalidStyle(cardNumberField);
     if(triggerFunction !== "liveValidate"){
-      console.log("You have to enter a creddit card number");
+      if(cardErrorMessageShow){
+        hideErrorMessage("card");
+      };
+      showErrorMessage("card", "You have to enter a credit card number", cardNumberField);
+      cardErrorMessageShow = true;
     };
     return false;
-  } else if (cardNumber.length < 13){
+  } else if (!isNaN(cardNumber) && cardNumber.length < 13){
     invalidStyle(cardNumberField);
     if(triggerFunction !== "liveValidate"){
-      console.log("Credit card number is too short");
+      if(cardErrorMessageShow){
+        hideErrorMessage("card");
+      };
+      showErrorMessage("card", "Credit card number is too short", cardNumberField);
+      cardErrorMessageShow = true;
     };
     return false;
-  } else if (cardNumber.length > 16){
+  } else if (!isNaN(cardNumber) && cardNumber.length > 16){
     invalidStyle(cardNumberField);
     if(triggerFunction !== "liveValidate"){
-      console.log("Credit card number is too long");
+      if(cardErrorMessageShow){
+        hideErrorMessage("card");
+      };
+      showErrorMessage("card", "Credit card number is too long", cardNumberField);
+      cardErrorMessageShow = true;
     };
     return false;
   } else if (isNaN(cardNumber)){
     invalidStyle(cardNumberField);
     if(triggerFunction !== "liveValidate"){
-      console.log("Credit card number have to be a number");
+      if(cardErrorMessageShow){
+        hideErrorMessage("card");
+      };
+      showErrorMessage("card", "Credit card number have to be a number", cardNumberField);
+      cardErrorMessageShow = true;
     };
     return false;
   } else {
     validStyle(cardNumberField);
+    if(cardErrorMessageShow){
+      hideErrorMessage("card");
+      cardErrorMessageShow = false;
+    };
     return true;
   };
 };
 
+/* CHECK THAT ZIP CODE IS A 5 DIGIT NUMBER
+*/
 function cardZipCodeValidation(triggerFunction){
   cardZipCode = document.querySelector("input[id='zip']").value;
   if (isNaN(cardZipCode) || cardZipCode.length !== 5 || cardZipCode === ""){
     invalidStyle(cardZipCodeField);
     if(triggerFunction !== "liveValidate"){
-      console.log("Zip code have to contain 5 digits");
+      if(zipErrorMessageShow){
+        hideErrorMessage("zip");
+      };
+      showErrorMessage("zip", "Zip code have to contain 5 digits", cardZipCodeField);
+      zipErrorMessageShow = true;
     };
     return false;
   } else {
     validStyle(cardZipCodeField);
+    if(zipErrorMessageShow){
+      hideErrorMessage("zip");
+      zipErrorMessageShow = false;
+    };
     return true;
   };
 };
 
+/* CHECK THAT CVV IS A 3 DIGIT NUMBER
+*/
 function cardCVVValidation(triggerFunction){
   cardCVV = document.querySelector("input[id='cvv']").value;
   if (isNaN(cardCVV) || cardCVV.length !== 3 || cardCVV === ""){
     invalidStyle( cardCVVField);
     if(triggerFunction !== "liveValidate"){
-      console.log("CVV have to contain 3 digits");
+      if(cvvErrorMessageShow){
+        hideErrorMessage("cvv");
+      };
+      showErrorMessage("cvv", "CVV have to contain 3 digits", cardCVVField);
+      cvvErrorMessageShow = true;
     };
     return false;
   } else {
     validStyle(cardCVVField);
+    if(cvvErrorMessageShow){
+      hideErrorMessage("cvv");
+      cvvErrorMessageShow = false;
+    };
     return true;
   };
 };
 
+/* EXECUTE LIVE VALIDATION
+** On the following fields:
+** nameField, emailField, cardNumberField, cardNumberField, cardCVVField
+*/
 function liveValidation(){
   liveValidate(nameField, nameValidation);
   onblurValidate(nameField, nameValidation);
@@ -390,18 +479,27 @@ function liveValidation(){
   onblurValidate(cardCVVField, cardCVVValidation);
 };
 
+/* LIVE VALIDATION WHILE TYPING
+** Give instant feedback while user is typing
+*/
 function liveValidate(inputField, validationFunction){
   inputField.onkeyup = function(){
     validationFunction("liveValidate");
   };
 };
 
+/* LIVE VALIDATION WHEN INPUT FIELD LOSES FOCUS
+** Give instant feedback when user leave the input field
+*/
 function onblurValidate(inputField, validationFunction){
   inputField.onblur = function(){
     validationFunction("onblurValidate");
   };
 };
 
+/* VALIDATE FORM ON SUBMIT
+** Check if any field is not valid
+*/
 function submitValidation(){
   let validates = true; //Tells if form validates
 
@@ -426,10 +524,43 @@ function submitValidation(){
   return validates;
 };
 
+/* INSERT AFTER NODE FUNCTION
+*/
+function insertAfter(newNode, referenceNode) {
+    referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+};
+
+/* SHOW ERROR MESSAGE
+** Create and display div with error message
+** Insert div after the validated field
+*/
+function showErrorMessage(field, message, after){
+  div = document.createElement('div');
+  div.setAttribute("id", field + "-error");
+  div.setAttribute("style", "display: block");
+  p = document.createElement('p');
+  p.textContent = message;
+  p.setAttribute("style", "font-style: italic");
+  div.appendChild(p);
+  insertAfter(div, after);
+};
+
+/* REMOVE ERROR MESSAGE
+** Remove div with error message
+*/
+function hideErrorMessage(field){
+  const element = document.getElementById(field + "-error");
+  element.parentNode.removeChild(element);
+};
+
+/* GREEN BORDER ON VALID FIELD
+*/
 function validStyle(element){
   element.setAttribute("style", "border-color: green");
 };
 
+/* RED BORDER ON INVALID FIELD
+*/
 function invalidStyle(element){
   element.setAttribute("style", "border-color: red");
 };
@@ -472,10 +603,11 @@ function submitButton(){
   form.addEventListener("submit", (e) => {
     if (!submitValidation()){
       e.preventDefault();
-      console.log('not submitted');
-    } else {                      //Remove when ready
-      e.preventDefault();         //Remove when ready
-      console.log('submitted');   //Remove when ready
+      //Not the best solution, only to show the reviewer in a quick simple way
+      alert("Form was not submitted. Make sure all fields contains valid information!");
+    } else {
+      //Not the best solution, only to show the reviewer in a quick simple way
+      alert("Form was submitted.");
     };
   });
 };
@@ -490,12 +622,7 @@ function runProgram(){
   activities();
   paymentSection();
   liveValidation();
-  //formValidates();
   submitButton();
-  // const nameField = document.querySelector("fieldset").querySelector('input[id="name"]');
-  // nameField.onkeyup = function(){
-  //   console.log('test');
-  // };
 };
 
 runProgram();
